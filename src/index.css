@@ -1,0 +1,397 @@
+@import 'tailwindcss';
+
+@import 'react-pdf/dist/Page/AnnotationLayer.css';
+@import 'react-pdf/dist/Page/TextLayer.css';
+
+/* ========================================================================
+   VPEDIA LEARNING — Design Tokens
+   Single modern geometric sans (Outfit) across the whole product.
+   Bright, friendly, school-focused. Light surfaces only.
+   ===================================================================== */
+@theme {
+  --font-sans:
+    'Outfit', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  /* ---- Brand primary: blue ---- */
+  --color-brand-50: #eff5ff;
+  --color-brand-100: #dbe8fe;
+  --color-brand-200: #bfd7fe;
+  --color-brand-300: #93bbfd;
+  --color-brand-400: #6098fa;
+  --color-brand-500: #3b76f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+
+  /* ---- Brand secondary: purple ---- */
+  --color-grape-50: #f5f3ff;
+  --color-grape-100: #ede9fe;
+  --color-grape-200: #ddd6fe;
+  --color-grape-300: #c4b5fd;
+  --color-grape-400: #a78bfa;
+  --color-grape-500: #8b5cf6;
+  --color-grape-600: #7c3aed;
+  --color-grape-700: #6d28d9;
+  --color-grape-800: #5b21b6;
+
+  /* ---- Success: green ---- */
+  --color-leaf-50: #f0fdf4;
+  --color-leaf-100: #dcfce7;
+  --color-leaf-200: #bbf7d0;
+  --color-leaf-300: #86efac;
+  --color-leaf-400: #4ade80;
+  --color-leaf-500: #22c55e;
+  --color-leaf-600: #16a34a;
+  --color-leaf-700: #15803d;
+
+  /* ---- Warning / price: orange ---- */
+  --color-sun-50: #fff8ed;
+  --color-sun-100: #ffefd6;
+  --color-sun-200: #fedcae;
+  --color-sun-300: #fdc27b;
+  --color-sun-400: #fb9f3d;
+  --color-sun-500: #f97316;
+  --color-sun-600: #ea580c;
+  --color-sun-700: #c2410c;
+
+  /* ---- Accent: pink ---- */
+  --color-rose-50: #fff1f5;
+  --color-rose-100: #ffe4ec;
+  --color-rose-200: #fecdd9;
+  --color-rose-300: #fda4bd;
+  --color-rose-400: #fb7199;
+  --color-rose-500: #f43f75;
+  --color-rose-600: #e11d55;
+
+  /* ---- Accent: light blue / sky ---- */
+  --color-sky-brand-50: #f0f9ff;
+  --color-sky-brand-100: #e0f2fe;
+  --color-sky-brand-200: #bae6fd;
+  --color-sky-brand-300: #7dd3fc;
+  --color-sky-brand-400: #38bdf8;
+  --color-sky-brand-500: #0ea5e9;
+  --color-sky-brand-600: #0284c7;
+
+  /* ---- Ink / neutrals ---- */
+  --color-ink-50: #f8fafc;
+  --color-ink-100: #f1f5f9;
+  --color-ink-200: #e6ebf2;
+  --color-ink-300: #d3dbe6;
+  --color-ink-400: #94a3b8;
+  --color-ink-500: #64748b;
+  --color-ink-600: #475569;
+  --color-ink-700: #334155;
+  --color-ink-800: #1e293b;
+  --color-ink-900: #0f172a;
+
+  /* ---- Semantic aliases ---- */
+  --color-surface: #ffffff;
+  --color-canvas: #f6f8fe;
+  --color-canvas-deep: #eef2fd;
+  --color-hairline: #e8edf7;
+
+  /* ---- Radius ---- */
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  /* ---- Soft, low-contrast elevation (never heavy) ---- */
+  --shadow-card:
+    0 1px 2px 0 rgb(15 23 42 / 0.04), 0 4px 16px -4px rgb(15 23 42 / 0.06);
+  --shadow-card-hover:
+    0 2px 4px 0 rgb(15 23 42 / 0.04), 0 12px 28px -8px rgb(37 99 235 / 0.16);
+  --shadow-panel:
+    0 1px 2px 0 rgb(15 23 42 / 0.04), 0 8px 32px -12px rgb(15 23 42 / 0.1);
+  --shadow-pop:
+    0 10px 15px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.06);
+  --shadow-brand: 0 8px 20px -6px rgb(37 99 235 / 0.4);
+
+  /* ---- Motion ---- */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-up: fade-up 0.45s var(--ease-out-soft) both;
+  --animate-fade-in: fade-in 0.35s var(--ease-out-soft) both;
+  --animate-pop-in: pop-in 0.3s var(--ease-out-soft) both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  /* Two drift speeds for the hero composition, deliberately offset so the
+     layers never move in lockstep. Disabled under reduced motion by the
+     media query at the end of this file. */
+  --animate-float-slow: drift-slow 7.5s ease-in-out infinite;
+  --animate-float-fast: drift-fast 5.5s ease-in-out infinite;
+  --animate-confetti: confetti 2.4s ease-out both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: -160% 0;
+    }
+    to {
+      background-position: 160% 0;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  /* Hero composition drift: a few pixels, no rotation, so nothing inside the
+     composition can overlap a neighbour or clip at narrow widths. */
+  @keyframes drift-slow {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -7px, 0);
+    }
+  }
+
+  @keyframes drift-fast {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -5px, 0);
+    }
+  }
+  @keyframes confetti {
+    0% {
+      opacity: 0;
+      transform: translateY(-24px) rotate(0deg);
+    }
+    35% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(120px) rotate(360deg);
+    }
+  }
+}
+
+/* ========================================================================
+   Base
+   ===================================================================== */
+@layer base {
+  * {
+    border-color: var(--color-hairline);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink-800);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Never allow sideways scroll anywhere in the product. */
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-ink-900);
+    font-weight: 700;
+    letter-spacing: -0.018em;
+    line-height: 1.18;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible, on-brand focus ring for every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-brand-900);
+  }
+
+  /* Tabular figures for prices / page counts. */
+  .nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ========================================================================
+   Reusable utilities (small, deliberate set)
+   ===================================================================== */
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility container-reading {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 48rem;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+}
+
+@utility surface-card {
+  background-color: #ffffff;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+/* Brand gradient text for the single hero highlight word. */
+@utility text-brand-gradient {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-brand-600),
+    var(--color-grape-600) 90%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Light mesh wash used behind hero / CTA / dashboard greeting. */
+@utility bg-mesh {
+  background-color: #f4f7ff;
+  background-image:
+    radial-gradient(
+      48rem 26rem at 12% -8%,
+      rgb(37 99 235 / 0.13),
+      transparent 60%
+    ),
+    radial-gradient(
+      40rem 24rem at 92% 4%,
+      rgb(139 92 246 / 0.13),
+      transparent 62%
+    ),
+    radial-gradient(
+      34rem 20rem at 62% 108%,
+      rgb(56 189 248 / 0.1),
+      transparent 60%
+    );
+}
+
+@utility skeleton-base {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-ink-100) 20%,
+    var(--color-ink-200) 40%,
+    var(--color-ink-100) 60%
+  );
+  background-size: 220% 100%;
+  animation: var(--animate-shimmer);
+  border-radius: var(--radius-md);
+}
+
+/* Hide scrollbars on horizontal chip rails (mobile year/semester pickers). */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ========================================================================
+   PDF.js text layer tuning
+   ===================================================================== */
+@layer components {
+  .pdf-page .react-pdf__Page__textContent {
+    user-select: text;
+  }
+  .pdf-page .react-pdf__Page__annotations {
+    z-index: 1;
+  }
+}
+
+/* ========================================================================
+   Reduced motion — honour the OS preference everywhere
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================================================================
+   Print — used by the notes viewer "print" affordance
+   ===================================================================== */
+@media print {
+  body {
+    background: #ffffff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .pdf-page-shadow {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

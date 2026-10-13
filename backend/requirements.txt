@@ -1,0 +1,26 @@
+# VPEDIA LEARNING — backend dependencies
+# Pinned to the versions this project was verified against.
+
+# Core
+Django==6.1.1
+psycopg[binary]==3.3.6
+Pillow==12.3.0
+# Reads the real page count out of an uploaded PDF.
+# Pure Python, no compiled dependency of its own.
+pypdf==6.20.0
+
+# API
+djangorestframework==3.18.1
+django-cors-headers==4.9.0
+
+# Google OAuth / OpenID Connect.
+# `[socialaccount]` pulls in the provider framework plus `requests` and
+# `PyJWT`, which allauth uses to verify Google's OIDC tokens.
+django-allauth[socialaccount]==65.19.7
+
+# Configuration
+django-environ==0.14.0
+
+# Testing
+pytest==9.1.1
+pytest-django==4.14.0

@@ -1,0 +1,17 @@
+{
+  "name": "VPEDIA LEARNING",
+  "short_name": "VPEDIA",
+  "description": "Notes, PYQs, solved solutions, practice and model papers for Classes 7 to 12.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

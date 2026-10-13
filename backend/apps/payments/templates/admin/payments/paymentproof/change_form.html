@@ -1,0 +1,45 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block after_field_sets %}
+  {% if show_review_actions %}
+    <div class="module" style="margin-top:20px;">
+      <h2>Review this payment</h2>
+
+      <p style="margin:0 0 12px;">
+        Approving activates <strong>{{ pending_proof.class_purchase.class_level.name }}</strong>
+        access for <strong>{{ pending_proof.user.email }}</strong>.
+        Rejecting leaves the class locked and lets the student submit a new request.
+      </p>
+
+      <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-end;">
+        <form method="post" style="display:inline;">
+          {% csrf_token %}
+          <input type="hidden" name="_vpedia_action" value="approve">
+          <button type="submit"
+                  class="default"
+                  style="background:#22c55e; border-color:#22c55e; color:#fff; padding:10px 20px; border-radius:6px; font-weight:600; cursor:pointer;">
+            Approve &amp; activate access
+          </button>
+        </form>
+
+        <form method="post" style="display:inline-flex; gap:8px; align-items:flex-end;">
+          {% csrf_token %}
+          <input type="hidden" name="_vpedia_action" value="reject">
+          <div>
+            <label for="bulk_rejection_reason" style="display:block; font-size:11px; margin-bottom:3px;">
+              Rejection reason (required to reject)
+            </label>
+            <input type="text" name="rejection_reason" id="bulk_rejection_reason"
+                   maxlength="500" style="width:320px; padding:8px; border:1px solid #ccc; border-radius:6px;">
+          </div>
+          <button type="submit"
+                  class="default"
+                  style="background:#ef4444; border-color:#ef4444; color:#fff; padding:10px 20px; border-radius:6px; font-weight:600; cursor:pointer;">
+            Reject payment
+          </button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
